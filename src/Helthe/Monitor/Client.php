@@ -12,6 +12,7 @@
 namespace Helthe\Monitor;
 
 use Guzzle\Http\Client as GuzzleClient;
+use Helthe\Monitor\Plugin\AuthenticationPlugin;
 
 /**
  * The Helthe Monitor Client communicates with the Helthe API via HTTP.
@@ -32,7 +33,9 @@ class Client extends GuzzleClient
     {
         parent::__construct($baseUrl);
 
-        $this->setDefaultOption('headers/helthe-api-key', $apiKey);
+        // Plugins
+        $this->addSubscriber(new AuthenticationPlugin($apiKey));
+
         $this->setDefaultOption('headers/Accept', 'application/json');
         $this->setDefaultOption('headers/Content-type', 'application/json');
     }
