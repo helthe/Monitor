@@ -12,6 +12,7 @@
 namespace Helthe\Monitor;
 
 use Guzzle\Http\Client as GuzzleClient;
+use Guzzle\Plugin\Backoff\BackoffPlugin;
 use Helthe\Monitor\Plugin\AuthenticationPlugin;
 
 /**
@@ -35,6 +36,7 @@ class Client extends GuzzleClient
 
         // Plugins
         $this->addSubscriber(new AuthenticationPlugin($apiKey));
+        $this->addSubscriber(BackoffPlugin::getExponentialBackoff());
 
         $this->setDefaultOption('headers/Accept', 'application/json');
         $this->setDefaultOption('headers/Content-type', 'application/json');
