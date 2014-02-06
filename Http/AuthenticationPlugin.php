@@ -9,17 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Helthe\Monitor\Plugin;
+namespace Helthe\Monitor\Http;
 
 use Guzzle\Common\Event;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * The AuthenticationPlugin modifies a request so that it can properly be authenticated with Helthe.
+ * The AuthenticationPlugin modifies a request so that it can properly be
+ * authenticated with Helthe.
  *
  * @author Carl Alexander <carlalexander@helthe.co>
  */
-final class AuthenticationPlugin implements EventSubscriberInterface
+class AuthenticationPlugin implements EventSubscriberInterface
 {
     /**
      * @var string

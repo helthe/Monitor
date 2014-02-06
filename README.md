@@ -8,24 +8,29 @@ Helthe Monitor requires that the cURL extension be installed.
 
 ### Using composer
 
-You can install the Helthe monitor library using [composer](http://getcomposer.org) by adding the dependency to the library as shown below.
+Add the following in your `composer.json`:
 
-    {
-      "require": {
-          "helthe/monitor": "dev-master"
-      }
-    }
+```json
+{
+  "require": {
+      "helthe/monitor": "dev-master"
+  }
+}
+```
 
 ## Usage
 
-    use Helthe\Monitor\Client;
-    use Helthe\Monitor\ErrorHandler
-    
+```php
+use Helthe\Monitor\Monitor
 
-    $client = new Client('http://api.helthe.co', 'your_project_api_key');
-    ErrorHandler::register($client, -1);
-    
-    trigger_error('test');
+
+Monitor::enable(array(
+    'api_key'     => 'your_project_api_key',
+    'application' => array(
+        'root_directory' => __DIR__
+    )
+));
+```
 
 ## Bugs
 

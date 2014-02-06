@@ -9,36 +9,52 @@
  * file that was distributed with this source code.
  */
 
-namespace Helthe\Monitor;
+namespace Helthe\Monitor\Http;
 
-use Guzzle\Http\Client as GuzzleClient;
-use Guzzle\Plugin\Backoff\BackoffPlugin;
-use Helthe\Monitor\Plugin\AuthenticationPlugin;
+use Guzzle\Service\Client as GuzzleClient;
+use Helthe\Monitor\Client\ClientInterface;
+use Helthe\Monitor\Report\Report;
 
 /**
  * The Helthe Monitor Client communicates with the Helthe API via HTTP.
  *
  * @author Carl Alexander <carlalexander@helthe.co>
  */
-class Client extends GuzzleClient
+class Client extends GuzzleClient implements ClientInterface
 {
+    /**
+     * Client version.
+     *
+     * @var string
+     */
+    const VERSION = 'alpha';
+
     /**
      * Constructor.
      *
-     * @param string $baseUrl
      * @param string $apiKey
+     * @param string $endpointUrl
      *
      * @throws \RuntimeException
      */
-    public function __construct($baseUrl, $apiKey)
+    public function __construct($apiKey, $endpointUrl)
     {
-        parent::__construct($baseUrl);
+        parent::__construct($endpointUrl);
+
+        $this->setUserAgent('helthe-monitor/'. self::VERSION, true);
 
         // Plugins
         $this->addSubscriber(new AuthenticationPlugin($apiKey));
-        $this->addSubscriber(BackoffPlugin::getExponentialBackoff());
 
         $this->setDefaultOption('headers/Accept', 'application/json');
         $this->setDefaultOption('headers/Content-type', 'application/json');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function sendReport(Report $report)
+    {
+        $this->post('/reports', null, json_encode($report))->send();
     }
 }
