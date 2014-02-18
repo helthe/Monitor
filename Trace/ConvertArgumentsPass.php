@@ -52,6 +52,32 @@ class ConvertArgumentsPass implements TransformationPassInterface
     }
 
     /**
+     * Get the correct reflection function using the given function name, class name and type.
+     *
+     * @param string $function
+     * @param string $class
+     * @param string $type
+     *
+     * @return \ReflectionFunctionAbstract|null
+     */
+    private function getReflectionFunction($function, $class = '', $type = '')
+    {
+        $reflection = null;
+
+        if (!empty($class) && method_exists($class, $function)) {
+            $reflection = new \ReflectionMethod($class, $function);
+        } elseif (!empty($class) && '::' == $type) {
+            $reflection = new \ReflectionMethod($class, '__callStatic');
+        } elseif (!empty($class) && '->' == $type) {
+            $reflection = new \ReflectionMethod($class, '__call');
+        } elseif (empty($class) && function_exists($function)) {
+            $reflection = new \ReflectionFunction($function);
+        }
+
+        return $reflection;
+    }
+
+    /**
      * Transforms the arguments for the given function or class method.
      *
      * @param array  $args
@@ -63,21 +89,11 @@ class ConvertArgumentsPass implements TransformationPassInterface
      */
     private function transformArguments(array $args, $function, $class = '', $type = '')
     {
-        $reflection = null;
-
         if (in_array($function, array('include', 'include_once', 'require', 'require_once'))) {
             return array('file' => new Argument($args[0]));
         }
 
-        if (!empty($class) && method_exists($class, $function)) {
-            $reflection = new \ReflectionMethod($class, $function);
-        } elseif (!empty($class) && '::' == $type) {
-            $reflection = new \ReflectionMethod($class, '__callStatic');
-        } elseif (!empty($class) && '->' == $type) {
-            $reflection = new \ReflectionMethod($class, '__call');
-        } elseif (empty($class) && function_exists($function)) {
-            $reflection = new \ReflectionFunction($function);
-        }
+        $reflection = $this->getReflectionFunction($function, $class, $type);
 
         if (!$reflection instanceof \ReflectionFunctionAbstract) {
             return array();
