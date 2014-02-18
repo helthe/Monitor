@@ -93,11 +93,10 @@ class ErrorHandler
      * @param string  $message
      * @param string  $file
      * @param integer $line
-     * @param array   $context
      *
      * @return boolean
      */
-    public function handleError($level, $message, $file = 'unknown', $line = 0, array $context = array())
+    public function handleError($level, $message, $file = 'unknown', $line = 0)
     {
         $this->handleException(new \ErrorException($message, 0, $level, $file, $line));
 

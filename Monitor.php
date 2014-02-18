@@ -40,11 +40,11 @@ class Monitor
      */
     public static function enable(array $configs)
     {
-        if (static::$enabled || 'cli' === php_sapi_name()) {
+        if (self::$enabled || 'cli' === php_sapi_name()) {
             return;
         }
 
-        static::$enabled = true;
+        self::$enabled = true;
         $processor = new Processor();
         // Configs need to be wrapper in an additional array for the processor
         $configs = $processor->processConfiguration(new Configuration(), array($configs));
@@ -86,7 +86,7 @@ class Monitor
     /**
      * Registers a error handler.
      *
-     * @param integer $configs
+     * @param integer $level
      *
      * @return ErrorHandler
      */

@@ -44,8 +44,8 @@ class ConvertArgumentsPass implements TransformationPassInterface
         $frame['args'] = $this->transformArguments(
             $frame['args'],
             $frame['function'],
-            isset($frame['class']) ? $frame['class'] : '',
-            isset($frame['type']) ? $frame['type'] : ''
+            isset($frame['class']) && is_string($frame['class']) ? $frame['class'] : '',
+            isset($frame['type']) && is_string($frame['type']) ? $frame['type'] : ''
         );
 
         return $frame;

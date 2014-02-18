@@ -34,7 +34,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyConfig()
     {
-        $config = $this->processor->processConfiguration(new Configuration(), array(array()));
+        $this->processor->processConfiguration(new Configuration(), array(array()));
     }
 
     /**
@@ -42,7 +42,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyProjectKeyConfig()
     {
-        $config = $this->processor->processConfiguration(new Configuration(), array(array('api_key' => '')));
+        $this->processor->processConfiguration(new Configuration(), array(array('api_key' => '')));
     }
 
     public function testWithProjectKeyOnly()
@@ -64,7 +64,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
      */
     public function testEmptyRootDirConfig()
     {
-        $config = $this->processor->processConfiguration(new Configuration(), array(array('api_key' => 'foo', 'application' => array('root_directory' => ''))));
+        $this->processor->processConfiguration(new Configuration(), array(array('api_key' => 'foo', 'application' => array('root_directory' => ''))));
     }
 
     public function testWithApplicationRootDirOnly()

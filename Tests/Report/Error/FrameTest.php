@@ -31,7 +31,7 @@ class FrameTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidConstructor()
     {
-        $frame = new Frame('foo.php', 11, '', 'Foo');
+        new Frame('foo.php', 11, '', 'Foo');
     }
 
     public function testGetSourceCodeLines()
