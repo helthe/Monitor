@@ -1,4 +1,4 @@
-# Helthe Monitor
+# Helthe Monitor [![Build Status](https://secure.travis-ci.org/helthe/Monitor.png?branch=master)](http://travis-ci.org/helthe/Monitor) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/helthe/Monitor/badges/quality-score.png?s=f09511b62eaeaafcc8c1d8cdb8a7149384a2bd94)](https://scrutinizer-ci.com/g/helthe/Monitor/)
 
 Helthe Monitor is the offical PHP client for Helthe.
 
