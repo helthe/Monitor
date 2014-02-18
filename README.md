@@ -23,7 +23,6 @@ Add the following in your `composer.json`:
 ```php
 use Helthe\Monitor\Monitor
 
-
 Monitor::enable(array(
     'api_key'     => 'your_project_api_key',
     'application' => array(
